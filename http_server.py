@@ -6,9 +6,9 @@ DIRECTORY = "html-files"
 
 class HttpRequestHandler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
-        if self.path == '/site-a.com':
+        if self.path == '/a.com':
             self.path = '/site-a.html'
-        if self.path == '/site-b.com':
+        if self.path == '/b.com':
             self.path = '/site-b.html'
         return http.server.SimpleHTTPRequestHandler.do_GET(self)
     

@@ -10,8 +10,8 @@ print(f"You have IP: {local_ip}")
 
 # DNS server config (mapping domain names to the local machine's ip)
 DOMAIN_TO_IP = {
-    'site-a.com.': local_ip,
-    'site-b.com.': local_ip 
+    'a.com.': local_ip,
+    'b.com.': local_ip 
 }
 
 class DNSHandler(socketserver.BaseRequestHandler):
