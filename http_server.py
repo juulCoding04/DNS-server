@@ -6,14 +6,20 @@ DIRECTORY = "html-files"
 
 class HttpRequestHandler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
-        if self.path == '/a.com':
-            self.path = '/site-a.html'
-        if self.path == '/b.com':
-            self.path = '/site-b.html'
+        host = self.headers.get('Host', '')
+
+        if 'a.com' in host:
+            self.path = '/a.html'
+        elif 'b.com' in host:
+            self.path = '/b.html'
+        else:
+            self.path = '/'
         return http.server.SimpleHTTPRequestHandler.do_GET(self)
     
     def translate_path(self, path):
-        return f"./{DIRECTORY}/{path}" # translating the requested path to a file in our given directory
+        resolved_path = f"./{DIRECTORY}/{path.lstrip('/')}"
+        print(f"Translating path: {path} -> {resolved_path}")
+        return resolved_path
     
 handler = HttpRequestHandler
 server = socketserver.TCPServer(("0.0.0.0", PORT), handler)
