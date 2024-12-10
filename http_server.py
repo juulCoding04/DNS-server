@@ -13,7 +13,7 @@ class HttpRequestHandler(http.server.SimpleHTTPRequestHandler):
         return http.server.SimpleHTTPRequestHandler.do_GET(self)
     
     def translate_path(self, path):
-        return f"./{DIRECTORY}/{path}"
+        return f"./{DIRECTORY}/{path}" # translating the requested path to a file in our given directory
     
 handler = HttpRequestHandler
 server = socketserver.TCPServer(("0.0.0.0", PORT), handler)
