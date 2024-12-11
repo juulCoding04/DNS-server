@@ -33,6 +33,8 @@ class DNSHandler(socketserver.BaseRequestHandler):
 
             if qname in DOMAIN_TO_IP:
                 # adds answer section to dns reply
+                # RR = Resource Record
+                # RR parameters: qname = domain name, QTYPE = A (= address record = maps domain name to IPv4), rdata = local ip where website lives
                 reply.add_answer(RR(qname, QTYPE.A, rdata=A(DOMAIN_TO_IP[qname])))
                 print(f"Resolved {qname} to {DOMAIN_TO_IP[qname]}")
             else:
