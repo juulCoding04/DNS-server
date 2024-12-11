@@ -26,9 +26,13 @@ class DNSHandler(socketserver.BaseRequestHandler):
             print(f"Received request for: {str(qname)}")
 
             # Creating DNS response
+            # DNS reply format HEADER: id = same id as request id + qr=1 for response + aa=1 to let know the info is from original source (not cache)
+            # + ra=1 for recursive access (can contact other DNS server)
+            # q is given so the reply has same question section as the request.
             reply = DNSRecord(DNSHeader(id=request.header.id, qr=1, aa=1, ra=1), q=request.q)
 
             if qname in DOMAIN_TO_IP:
+                # adds answer section to dns reply
                 reply.add_answer(RR(qname, QTYPE.A, rdata=A(DOMAIN_TO_IP[qname])))
                 print(f"Resolved {qname} to {DOMAIN_TO_IP[qname]}")
             else:
